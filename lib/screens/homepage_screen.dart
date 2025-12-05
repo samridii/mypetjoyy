@@ -25,13 +25,26 @@ class HomePageScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              child: const Icon(Icons.set_meal, size: 70, color: Colors.white),
+              alignment: Alignment.center,
+              child: const Text(
+                "I AM HOMEPAGE",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
             ),
 
             const SizedBox(height: 30),
 
+            const Icon(Icons.favorite, size: 70, color: Color(0xFFE57373)),
+
+            const SizedBox(height: 20),
+
             const Text(
-              "I am Homepage",
+              "Welcome to the Home!",
               style: TextStyle(
                 fontFamily: "Fredoka",
                 fontSize: 28,
