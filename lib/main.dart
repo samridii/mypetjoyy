@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         '/onboarding_one': (context) => const OnboardingOneScreen(),
         '/onboarding_two': (context) => const OnboardingTwoScreen(),
         '/onboarding_three': (context) => const OnboardingThreeScreen(),
+        '/signin': (context) => const SignInScreen(),
       },
     );
   }
