@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SignInScreen extends StatelessWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+  SignInScreen({Key? key}) : super(key: key);
+
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +64,7 @@ class SignInScreen extends StatelessWidget {
                     end: Alignment.bottomCenter,
                     colors: [Color(0xFF5C9FD6), Color(0xFF4A8BC2)],
                   ),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
-                    bottomLeft: Radius.circular(40),
-                    bottomRight: Radius.circular(40),
-                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(32.0),
@@ -97,6 +95,7 @@ class SignInScreen extends StatelessWidget {
                       const SizedBox(height: 8),
 
                       TextField(
+                        controller: usernameController,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
@@ -124,6 +123,7 @@ class SignInScreen extends StatelessWidget {
                       const SizedBox(height: 8),
 
                       TextField(
+                        controller: passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           filled: true,
@@ -142,27 +142,39 @@ class SignInScreen extends StatelessWidget {
                       const SizedBox(height: 30),
 
                       Center(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/home');
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFB8B3E8),
-                            foregroundColor: const Color(0xFF1E3A5F),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 60,
-                              vertical: 14,
+                        child: Builder(
+                          builder: (context) => ElevatedButton(
+                            onPressed: () {
+                              if (usernameController.text.isEmpty ||
+                                  passwordController.text.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Please fill all fields!"),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                                return;
+                              }
+                              Navigator.pushReplacementNamed(context, '/home');
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFFB8B3E8),
+                              foregroundColor: const Color(0xFF1E3A5F),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 60,
+                                vertical: 14,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              elevation: 0,
                             ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            elevation: 0,
-                          ),
-                          child: const Text(
-                            'Sign in',
-                            style: TextStyle(
-                              fontSize: 19,
-                              fontWeight: FontWeight.w500,
+                            child: const Text(
+                              'Sign in',
+                              style: TextStyle(
+                                fontSize: 19,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                         ),

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+  SignUpScreen({Key? key}) : super(key: key);
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passController = TextEditingController();
+  final TextEditingController confirmPassController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -68,12 +73,7 @@ class SignUpScreen extends StatelessWidget {
                     end: Alignment.bottomCenter,
                     colors: [Color(0xFF5C9FD6), Color(0xFF4A8BC2)],
                   ),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
-                    bottomLeft: Radius.circular(40),
-                    bottomRight: Radius.circular(40),
-                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(32.0),
@@ -104,6 +104,7 @@ class SignUpScreen extends StatelessWidget {
                       const SizedBox(height: 8),
 
                       TextField(
+                        controller: emailController,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
@@ -131,6 +132,7 @@ class SignUpScreen extends StatelessWidget {
                       const SizedBox(height: 8),
 
                       TextField(
+                        controller: usernameController,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
@@ -158,6 +160,7 @@ class SignUpScreen extends StatelessWidget {
                       const SizedBox(height: 8),
 
                       TextField(
+                        controller: passController,
                         obscureText: true,
                         decoration: InputDecoration(
                           filled: true,
@@ -186,6 +189,7 @@ class SignUpScreen extends StatelessWidget {
                       const SizedBox(height: 8),
 
                       TextField(
+                        controller: confirmPassController,
                         obscureText: true,
                         decoration: InputDecoration(
                           filled: true,
@@ -204,27 +208,56 @@ class SignUpScreen extends StatelessWidget {
                       const SizedBox(height: 30),
 
                       Center(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/signin');
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFB8B3E8),
-                            foregroundColor: const Color(0xFF1E3A5F),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 60,
-                              vertical: 14,
+                        child: Builder(
+                          builder: (context) => ElevatedButton(
+                            onPressed: () {
+                              if (emailController.text.isEmpty ||
+                                  usernameController.text.isEmpty ||
+                                  passController.text.isEmpty ||
+                                  confirmPassController.text.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Please fill all fields!"),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                                return;
+                              }
+
+                              if (passController.text !=
+                                  confirmPassController.text) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Passwords do not match!"),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                                return;
+                              }
+
+                              Navigator.pushReplacementNamed(
+                                context,
+                                '/signin',
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFFB8B3E8),
+                              foregroundColor: const Color(0xFF1E3A5F),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 60,
+                                vertical: 14,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              elevation: 0,
                             ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            elevation: 0,
-                          ),
-                          child: const Text(
-                            'Sign up',
-                            style: TextStyle(
-                              fontSize: 19,
-                              fontWeight: FontWeight.w500,
+                            child: const Text(
+                              'Sign up',
+                              style: TextStyle(
+                                fontSize: 19,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                         ),
