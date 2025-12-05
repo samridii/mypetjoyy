@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mypetjoyy/screens/splash_screen.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
