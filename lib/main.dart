@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mypetjoyy/screens/onboarding_one.dart';
+import 'package:mypetjoyy/screens/onboarding_three.dart';
 import 'package:mypetjoyy/screens/onboarding_two.dart';
 import 'package:mypetjoyy/screens/splash_screen.dart';
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const SplashScreen(),
         '/onboarding_one': (context) => const OnboardingOneScreen(),
         '/onboarding_two': (context) => const OnboardingTwoScreen(),
+        '/onboarding_three': (context) => const OnboardingThreeScreen(),
       },
     );
   }
