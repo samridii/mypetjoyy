@@ -22,12 +22,12 @@ class CategoryCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 40, color: const Color.fromARGB(255, 252, 250, 226)),
+          Icon(icon, size: 41, color: const Color.fromARGB(255, 252, 250, 226)),
           const SizedBox(height: 10),
           Text(
             title,
             style: const TextStyle(
-              color: Color.fromARGB(255, 174, 170, 170),
+              color: Color.fromARGB(255, 188, 185, 185),
               fontWeight: FontWeight.w600,
             ),
           ),
