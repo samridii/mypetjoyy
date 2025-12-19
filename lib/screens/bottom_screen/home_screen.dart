@@ -69,7 +69,9 @@ class HomeScreen extends StatelessWidget {
                                 SizedBox(width: 8),
                                 Text(
                                   "Search",
-                                  style: TextStyle(color: Colors.grey),
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 176, 175, 175),
+                                  ),
                                 ),
                               ],
                             ),
@@ -134,7 +136,7 @@ class HomeScreen extends StatelessWidget {
                           ProductCard(
                             imageUrl: "assets/images/earcleaner.png",
                             title: "Ear Cleaner",
-                            price: "\$22.99",
+                            price: "\$20.99",
                           ),
                         ],
                       ),
