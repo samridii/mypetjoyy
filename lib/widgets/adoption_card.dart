@@ -18,17 +18,17 @@ class AdoptionCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  "Meet Luna!",
+                  "Meet Lucas!",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 5),
-                const Text("She's waiting for a home"),
+                const Text("He's waiting for a home"),
                 const SizedBox(height: 10),
                 ElevatedButton(onPressed: () {}, child: const Text("Adopt")),
               ],
             ),
           ),
-          const Icon(Icons.pets, size: 50),
+          const Icon(Icons.pets, size: 48),
         ],
       ),
     );
