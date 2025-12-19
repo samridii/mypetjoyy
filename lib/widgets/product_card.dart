@@ -19,11 +19,11 @@ class ProductCard extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: const Color(0xFFFFF2CC),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(19),
       ),
       child: Column(
         children: [
-          Image.asset(imageUrl, height: 80),
+          Image.asset(imageUrl, height: 81),
           const SizedBox(height: 10),
           Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
