@@ -27,7 +27,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         onTap: (i) => setState(() => index = i),
         type: BottomNavigationBarType.fixed,
         selectedItemColor: const Color.fromARGB(255, 70, 158, 221),
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: const Color.fromARGB(255, 192, 189, 189),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: ""),
