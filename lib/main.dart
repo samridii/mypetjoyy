@@ -4,8 +4,8 @@ import 'package:mypetjoyy/screens/dashboard_screen.dart';
 import 'package:mypetjoyy/screens/onboarding_one.dart';
 import 'package:mypetjoyy/screens/onboarding_three.dart';
 import 'package:mypetjoyy/screens/onboarding_two.dart';
-import 'package:mypetjoyy/screens/signin.dart';
-import 'package:mypetjoyy/screens/signup.dart';
+import 'package:mypetjoyy/features/auth/presentation/screens/signin.dart';
+import 'package:mypetjoyy/features/auth/presentation/screens/signup.dart';
 import 'package:mypetjoyy/screens/splash_screen.dart';
 import 'package:mypetjoyy/theme/theme_data.dart';
 

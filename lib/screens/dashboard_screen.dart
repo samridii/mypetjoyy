@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mypetjoyy/screens/bottom_screen/home_screen.dart';
+import 'package:mypetjoyy/features/bottom_screen/screens/home_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});

@@ -4,7 +4,7 @@ class SignUpScreen extends StatelessWidget {
   SignUpScreen({Key? key}) : super(key: key);
 
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController passController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
 
@@ -94,7 +94,7 @@ class SignUpScreen extends StatelessWidget {
                       const SizedBox(height: 30),
 
                       const Text(
-                        'Email Address',
+                        'Full Name',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -104,7 +104,7 @@ class SignUpScreen extends StatelessWidget {
                       const SizedBox(height: 8),
 
                       TextField(
-                        controller: emailController,
+                        controller: nameController,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
@@ -118,11 +118,10 @@ class SignUpScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 20),
 
                       const Text(
-                        'Username',
+                        'Email Address',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -132,7 +131,7 @@ class SignUpScreen extends StatelessWidget {
                       const SizedBox(height: 8),
 
                       TextField(
-                        controller: usernameController,
+                        controller: emailController,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
@@ -212,7 +211,7 @@ class SignUpScreen extends StatelessWidget {
                           builder: (context) => ElevatedButton(
                             onPressed: () {
                               if (emailController.text.isEmpty ||
-                                  usernameController.text.isEmpty ||
+                                  nameController.text.isEmpty ||
                                   passController.text.isEmpty ||
                                   confirmPassController.text.isEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
