@@ -13,6 +13,9 @@ class AuthEntity extends Equatable {
     required this.email,
     this.password,
     this.profilePicture,
+    String? phoneNumber,
+    required String username,
+    String? batchId,
   });
 
   @override
