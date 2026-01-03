@@ -1,13 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mypetjoyy/features/auth/presentation/screens/signup.dart';
+import 'package:mypetjoyy/features/auth/presentation/state/auth_state.dart';
+import 'package:mypetjoyy/features/auth/presentation/view_model/auth_view_model.dart';
+import 'package:mypetjoyy/features/bottom_screen/screens/home_screen.dart';
 
-class SignInScreen extends StatelessWidget {
-  SignInScreen({Key? key}) : super(key: key);
+class LoginScreen extends ConsumerStatefulWidget {
+  const LoginScreen({super.key});
 
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  @override
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authViewModelProvider);
+    ref.listen(authViewModelProvider, (_, next) {
+      if (next.status == AuthStatus.authenticated) {
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+      if (next.status == AuthStatus.error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(next.errorMessage ?? 'Invalid credentials'),
+            backgroundColor: Colors.red,
+          ),
+        );
+        ref.read(authViewModelProvider.notifier).clearError();
+      }
+    });
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFF9C4),
       body: SafeArea(
@@ -15,14 +42,22 @@ class SignInScreen extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(Icons.close, color: Colors.blue[300], size: 28),
-                    Icon(
+                    GestureDetector(
+                      onTap: () =>
+                          Navigator.pushReplacementNamed(context, '/splash'),
+                      child: Icon(
+                        Icons.close,
+                        color: Colors.blue[300],
+                        size: 28,
+                      ),
+                    ),
+                    const Icon(
                       Icons.pets,
-                      color: const Color.fromARGB(255, 195, 222, 228),
+                      color: Color.fromARGB(255, 195, 222, 228),
                       size: 40,
                     ),
                   ],
@@ -40,143 +75,71 @@ class SignInScreen extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              Image.asset('assets/images/mpjlogo.png', height: 190),
-
-              Padding(
-                padding: const EdgeInsets.only(right: 40, top: 10),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Icon(
-                    Icons.pets,
-                    color: const Color.fromARGB(255, 255, 221, 165),
-                    size: 40,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 10),
+              Image.asset('assets/images/mpjlogo.png', height: 180),
 
               Container(
                 width: double.infinity,
+                margin: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.all(32),
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
                     colors: [Color(0xFF5C9FD6), Color(0xFF4A8BC2)],
                   ),
-                  borderRadius: BorderRadius.all(Radius.circular(40)),
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(32.0),
+                child: Form(
+                  key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Center(
-                        child: Text(
-                          'MyPetJoy',
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF1E3A5F),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 30),
-
                       const Text(
-                        'Username',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        'Email',
+                        style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
                       const SizedBox(height: 8),
-
-                      TextField(
-                        controller: usernameController,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 16,
-                          ),
-                        ),
-                      ),
+                      _field(emailController),
 
                       const SizedBox(height: 20),
 
                       const Text(
                         'Password',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
                       const SizedBox(height: 8),
-
-                      TextField(
-                        controller: passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 16,
-                          ),
-                        ),
-                      ),
+                      _field(passwordController, obscure: true),
 
                       const SizedBox(height: 30),
 
                       Center(
-                        child: Builder(
-                          builder: (context) => ElevatedButton(
-                            onPressed: () {
-                              if (usernameController.text.isEmpty ||
-                                  passwordController.text.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Please fill all fields!"),
-                                    backgroundColor: Colors.red,
-                                  ),
-                                );
-                                return;
-                              }
-                              Navigator.pushReplacementNamed(context, '/home');
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFB8B3E8),
-                              foregroundColor: const Color(0xFF1E3A5F),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 60,
-                                vertical: 14,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              elevation: 0,
+                        child: ElevatedButton(
+                          onPressed: authState.status == AuthStatus.loading
+                              ? null
+                              : () {
+                                  if (_formKey.currentState!.validate()) {
+                                    ref
+                                        .read(authViewModelProvider.notifier)
+                                        .login(
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                        );
+                                  }
+                                },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFB8B3E8),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 60,
+                              vertical: 14,
                             ),
-                            child: const Text(
-                              'Sign in',
-                              style: TextStyle(
-                                fontSize: 19,
-                                fontWeight: FontWeight.w500,
-                              ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
                             ),
                           ),
+                          child: authState.status == AuthStatus.loading
+                              ? const CircularProgressIndicator(strokeWidth: 2)
+                              : const Text(
+                                  'Sign in',
+                                  style: TextStyle(fontSize: 18),
+                                ),
                         ),
                       ),
 
@@ -190,39 +153,28 @@ class SignInScreen extends StatelessWidget {
                               "Don't have an account? ",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 17,
+                                fontSize: 16,
                               ),
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(context, '/signup');
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const RegisterScreen(),
+                                  ),
+                                );
                               },
                               child: const Text(
-                                'Signup',
+                                'Sign up',
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 250, 252, 211),
-                                  fontSize: 17,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
                           ],
-                        ),
-                      ),
-
-                      const SizedBox(height: 10),
-
-                      Center(
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: const Text(
-                            'Forgot password?',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
                         ),
                       ),
 
@@ -237,4 +189,23 @@ class SignInScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget _field(TextEditingController c, {bool obscure = false}) =>
+      TextFormField(
+        controller: c,
+        obscureText: obscure,
+        validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 16,
+          ),
+        ),
+      );
 }

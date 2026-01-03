@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:mypetjoyy/core/constants/hive_table_constants.dart';
+import 'package:mypetjoyy/features/auth/data/models/auth_hive_model.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sprint1_project/features/auth/data/models/auth_hive_model.dart';
 
 final hiveServiceProvider = Provider<HiveService>((ref) => HiveService());
 
