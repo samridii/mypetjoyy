@@ -1,4 +1,3 @@
-// lib/core/network/api_client.dart
 import 'package:dio/dio.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:flutter/foundation.dart';
@@ -90,7 +89,6 @@ class _AuthInterceptor extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) {
     if (err.response?.statusCode == 401) {
       ref.read(secureStorageProvider).deleteToken();
-      // Optional: trigger global logout event / navigation later
     }
     handler.next(err);
   }
