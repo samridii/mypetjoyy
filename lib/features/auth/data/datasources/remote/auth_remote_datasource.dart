@@ -127,7 +127,7 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
         );
       case DioExceptionType.badResponse:
         if (e.response?.statusCode == 401) {
-          _secureStorage.deleteToken(); // Clear invalid token
+          _secureStorage.deleteToken(); 
           return AuthFailure(message: 'Invalid credentials');
         }
         return ServerFailure(message: message);
